@@ -1,0 +1,13 @@
+author = tvolk131
+version = 0.1
+displayName = Lovely Mod
+
+
+author = tvolk131
+displayName = Lovely Mod
+homepage = http://www.tommyvolk.com/
+hideCode = false
+hideResources = false
+includeSource = true
+buildIgnore = *.csproj, *.user, obj\*, bin\*, .vs\*
+includePDB = true
