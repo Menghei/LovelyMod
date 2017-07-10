@@ -9,7 +9,7 @@ namespace LovelyMod.NPCs
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Daddy Unk");
-			Main.npcFrameCount[npc.type] = 4; //Because this NPC has 4 frames
+			Main.npcFrameCount[npc.type] = 6; //Because this NPC has 4 frames
 		}
 
 		public override void SetDefaults()
@@ -19,21 +19,16 @@ namespace LovelyMod.NPCs
 			npc.defense = 0;
 			npc.lifeMax = 100;
 			npc.aiStyle = 3;
-			animationType = NPCID.Zombie;
 		}
 
-		// public override void FindFrame(int frameHeight)
-		// {
-		// 	if(npc.frameCounter <= 4)
-		// 	{
-		// 		npc.frameCounter++;
-		// 	}
-		// 	else
-		// 	{
-		// 		npc.frameCounter = 1;
-		// 	}
-		// 	npc.spriteDirection = npc.direction;
-		// }
+		public override void FindFrame(int frameHeight)
+		{
+			npc.frameCounter += 0.2F; //Animation speed
+			npc.frameCounter %= Main.npcFrameCount[npc.type];
+			int frame = (int)npc.frameCounter;
+			npc.frame.Y = frame * frameHeight;
+			npc.spriteDirection = npc.direction; //Makes npc always face towards the player
+		}
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
