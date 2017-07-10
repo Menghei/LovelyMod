@@ -14,6 +14,11 @@ namespace LovelyMod.Items
 
 		public override void SetDefaults()
 		{
+			item.healLife = 50;
+			item.consumable = true;
+			item.useStyle = 2;
+			item.useTime = 10;
+			item.useAnimation = 10;
 			item.width = 12;
 			item.height = 12;
 			item.maxStack = 50;
