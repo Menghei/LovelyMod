@@ -41,11 +41,8 @@ namespace LovelyMod.NPCs
 
 		public override void NPCLoot()
 		{
-			int numBeans = Main.rand.Next(5) + 5;
-			for(int i = 0; i < numBeans; i++)
-			{
-				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("Bean"));
-			}
+			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("BottleOfMilk"));
+			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("CookedBeef"));
 		}
 	}
 }
