@@ -22,14 +22,31 @@ namespace LovelyMod.NPCs
 			animationType = NPCID.Zombie;
 		}
 
+		// public override void FindFrame(int frameHeight)
+		// {
+		// 	if(npc.frameCounter <= 4)
+		// 	{
+		// 		npc.frameCounter++;
+		// 	}
+		// 	else
+		// 	{
+		// 		npc.frameCounter = 1;
+		// 	}
+		// 	npc.spriteDirection = npc.direction;
+		// }
+
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			return 1000f;
+			return 100000f;
 		}
 
 		public override void NPCLoot()
 		{
-			Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("RaethentiteOre"));
+			int numBeans = Main.rand.Next(5) + 5;
+			for(int i = 0; i < numBeans; i++)
+			{
+				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("Bean"));
+			}
 		}
 	}
 }
