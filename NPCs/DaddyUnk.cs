@@ -58,7 +58,24 @@ namespace LovelyMod.NPCs
 			}
 			else if(AI_State == State_Pursuing)
 			{
-				npc.velocity = new Vector2(npc.direction * 2, 0f);
+				AI_Timer++;
+				float yVelocity;
+				if(AI_Timer % 20 == 0)
+				{
+					yVelocity = 10;
+				}
+
+				//Gravity-like effect
+				if(npc.velocity.Y <= 1)
+				{
+					npc.velocity.Y++;
+				}
+				else if(npc.velocity.Y < 0 && npc.velocity.Y > -1)
+				{
+					npc.velocity.Y = 0;
+				}
+
+				npc.velocity = new Vector2(npc.direction * 2, npc.velocity.Y);
 				if(!npc.HasValidTarget || Main.player[npc.target].Distance(npc.Center) >= 100f)
 				{
 					AI_State = State_Peaceful;
