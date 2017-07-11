@@ -7,7 +7,6 @@ namespace LovelyMod.Items
 {
 	public class CookedBeef : ModItem
 	{
-		//TODO - Make raw beef and add recipe to turn raw into cooked beef
 		public override void SetStaticDefaults()
 		{
 			Tooltip.SetDefault("How delectable!");

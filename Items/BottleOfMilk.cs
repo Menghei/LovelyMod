@@ -23,7 +23,7 @@ namespace LovelyMod.Items
 			item.height = 12;
 			item.maxStack = 50;
 			item.useTurn = true; //Not sure what this does...
-			//TODO - Make consumable and add a buff
+			//TODO - Add a buff on use
 		}
 	}
 }
