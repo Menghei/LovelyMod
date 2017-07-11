@@ -35,7 +35,7 @@ namespace LovelyMod.NPCs
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			return 100000f;
+			return 10f;
 		}
 
 		public override void NPCLoot()

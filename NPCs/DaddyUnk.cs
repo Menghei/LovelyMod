@@ -1,3 +1,5 @@
+using System;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -18,7 +20,51 @@ namespace LovelyMod.NPCs
 			npc.height = 42;
 			npc.defense = 0;
 			npc.lifeMax = 100;
-			npc.aiStyle = 3;
+			npc.aiStyle = -1; //For unique AI
+		}
+
+		public override float SpawnChance(NPCSpawnInfo spawnInfo)
+		{
+			return 10000f; //Very high spawn rate, for testing purposes
+		}
+
+		const int AI_State_Slot = 0;
+		const int AI_Timer_Slot = 1;
+
+		const int State_Peaceful = 0;
+		const int State_Pursuing = 1;
+
+		public float AI_State
+		{
+			get{return npc.ai[AI_State_Slot];}
+			set{npc.ai[AI_State_Slot] = value;}
+		}
+		public float AI_Timer
+		{
+			get{return npc.ai[AI_Timer_Slot];}
+			set{npc.ai[AI_Timer_Slot] = value;}
+		}
+
+		public override void AI()
+		{
+			if(AI_State == State_Peaceful)
+			{
+				npc.TargetClosest(true); //Should face towards nearest player
+				if(npc.HasValidTarget && Main.player[npc.target].Distance(npc.Center) < 100f)
+				{
+					AI_State = State_Pursuing;
+					AI_Timer = 0;
+				}
+			}
+			else if(AI_State == State_Pursuing)
+			{
+				npc.velocity = new Vector2(npc.direction * 2, 0f);
+				if(!npc.HasValidTarget || Main.player[npc.target].Distance(npc.Center) >= 100f)
+				{
+					AI_State = State_Peaceful;
+					AI_Timer = 0;
+				}
+			}
 		}
 
 		public override void FindFrame(int frameHeight)
@@ -28,11 +74,6 @@ namespace LovelyMod.NPCs
 			int frame = (int)npc.frameCounter;
 			npc.frame.Y = frame * frameHeight;
 			npc.spriteDirection = npc.direction; //Makes npc always face towards the player
-		}
-
-		public override float SpawnChance(NPCSpawnInfo spawnInfo)
-		{
-			return 100f;
 		}
 
 		public override void NPCLoot()
