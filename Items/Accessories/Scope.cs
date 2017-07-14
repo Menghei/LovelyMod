@@ -22,16 +22,15 @@ namespace LovelyMod.Items.Accessories
 
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
-			//TODO - Figure out how to increase damage with only guns
-			player.rangedDamage*=1.2f;
+			player.GetModPlayer<LovelyModPlayer>(mod).scopeEquipped = true;
 		}
 
 		public override void AddRecipes()
-        {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.DirtBlock);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
-        }
+    {
+      ModRecipe recipe = new ModRecipe(mod);
+      recipe.AddIngredient(ItemID.DirtBlock);
+      recipe.SetResult(this);
+      recipe.AddRecipe();
+    }
 	}
 }
