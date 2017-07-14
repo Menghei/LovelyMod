@@ -26,11 +26,11 @@ namespace LovelyMod
 		{
 			if(this.scopeEquipped)
 			{
-				this.gunMultiplier = 5f;
+				this.gunMultiplier = 5f; //Increases gun damage if scope is equipped
 			}
 			else
 			{
-				this.gunMultiplier = 1f;
+				this.gunMultiplier = 1f; //Makes sure the gun multiplier is normal if scope is not equipped
 			}
 		}
 
