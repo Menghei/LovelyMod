@@ -17,4 +17,40 @@ namespace LovelyMod.Items
 			}
 		}
 	}
+	
+	public class ModdedStickyGrenade : GlobalItem
+	{
+		public override void SetDefaults(Item item)
+		{
+			//Makes grenades count as ammo
+			if(item.type == ItemID.StickyGrenade)
+			{
+				item.ammo = ItemID.Grenade;
+			}
+		}
+	}
+	
+	public class ModdedBouncyGrenade : GlobalItem
+	{
+		public override void SetDefaults(Item item)
+		{
+			//Makes grenades count as ammo
+			if(item.type == ItemID.BouncyGrenade)
+			{
+				item.ammo = ItemID.Grenade;
+			}
+		}
+	}
+	
+	public class ModdedBeenade : GlobalItem
+	{
+		public override void SetDefaults(Item item)
+		{
+			//Makes grenades count as ammo
+			if(item.type == ItemID.Beenade)
+			{
+				item.ammo = ItemID.Grenade;
+			}
+		}
+	}
 }

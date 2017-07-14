@@ -24,6 +24,21 @@ namespace LovelyMod
 			
 			recipe = new ModRecipe(this);
 			recipe.AddIngredient(ItemID.DirtBlock);
+			recipe.SetResult(ItemID.StickyGrenade, 999);
+			recipe.AddRecipe();
+			
+			recipe = new ModRecipe(this);
+			recipe.AddIngredient(ItemID.DirtBlock);
+			recipe.SetResult(ItemID.BouncyGrenade, 999);
+			recipe.AddRecipe();
+			
+			recipe = new ModRecipe(this);
+			recipe.AddIngredient(ItemID.DirtBlock);
+			recipe.SetResult(ItemID.Beenade, 999);
+			recipe.AddRecipe();
+			
+			recipe = new ModRecipe(this);
+			recipe.AddIngredient(ItemID.DirtBlock);
 			recipe.SetResult(ItemID.MusketBall, 100);
 			recipe.AddRecipe();
 			
