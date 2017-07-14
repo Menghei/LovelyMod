@@ -15,6 +15,7 @@ namespace LovelyMod.Items.Weapons
 		public int maxShotCount;
 		public int useTime;
 		public int reloadTime;
+		public int damage; //EXPERIMENTAL - Used to properly display the correct damage amount due to the scope modifier
 
 		private int shotCount;
 
@@ -24,6 +25,7 @@ namespace LovelyMod.Items.Weapons
 			useTime = 20;
 			reloadTime = 60;
 			setShotCount(maxShotCount);
+			damage = -1; //EXPERIMENTAL
 		}
 		public int getShotCount()
 		{
@@ -50,6 +52,21 @@ namespace LovelyMod.Items.Weapons
 		public override void SetStaticDefaults()
 		{
 			Tooltip.SetDefault("Warm to the touch.");
+		}
+
+		//EXPERIMENTAL
+		public override void UpdateInventory(Player player)
+		{
+			this.damage = (int)(item.damage * player.GetModPlayer<LovelyModPlayer>(mod).gunMultiplier);
+			//this.ModifyTooltips(this.Tooltip);
+		}
+
+		//EXPERIMENTAL
+		public override void ModifyTooltips(List<TooltipLine> tooltips)
+		{
+			TooltipLine damage = tooltips.FirstOrDefault(x => x.Name == "Damage" && x.mod == "Terraria");
+			damage.text = this.damage + " ranged damage";
+			this.damage++;
 		}
 
 		public override void SetDefaults()
