@@ -18,18 +18,6 @@ namespace LovelyMod.Items
 			item.height = 12;
 			item.maxStack = 999;
 			item.useTurn = true; //Not sure what this does...
-
-			item.consumable = true;
-			item.useStyle = 2;
-			item.useTime = 10;
-			item.useAnimation = 10;
 		}
-
-    public override bool UseItem(Player player)
-    {
-      Main.dayTime = false;
-      Main.time = 16200.0;
-			return true;
-    }
 	}
 }
