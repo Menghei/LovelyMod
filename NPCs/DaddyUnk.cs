@@ -47,46 +47,85 @@ namespace LovelyMod.NPCs
 
 		public override void AI()
 		{
+			npc.stairFall = false;
+
 			if(AI_State == State_Peaceful)
 			{
 				npc.TargetClosest(true); //Should face towards nearest player
-				if(npc.HasValidTarget && Main.player[npc.target].Distance(npc.Center) < 100f)
+				if(npc.HasValidTarget && Main.player[npc.target].Distance(npc.Center) < 200f)
 				{
 					AI_State = State_Pursuing;
 					AI_Timer = 0;
 				}
+				//Causes smooth deceleration when the target is lost
+				if(npc.velocity.X < 0.05f && npc.velocity.X > -0.05f)
+				{
+					npc.velocity.X = 0f;
+				}
+				else
+				{
+					npc.velocity.X /= 1.05f;
+				}
 			}
 			else if(AI_State == State_Pursuing)
 			{
+				Point bottomCenter = (npc.Bottom / 16f).ToPoint();
+				Point checkPoint = new Point(bottomCenter.X + (npc.direction > 0 ? 2 : -2), bottomCenter.Y);
 				AI_Timer++;
-				float yVelocity;
-				if(AI_Timer % 20 == 0)
+				//Face toward nearest player periodically
+				if(AI_Timer % 30 == 0)
 				{
-					yVelocity = 10;
+					npc.TargetClosest(true); //Should face towards nearest player
 				}
-
-				//Gravity-like effect
-				if(npc.velocity.Y <= 1)
-				{
-					npc.velocity.Y++;
-				}
-				else if(npc.velocity.Y < 0 && npc.velocity.Y > -1)
-				{
-					npc.velocity.Y = 0;
-				}
-
-				npc.velocity = new Vector2(npc.direction * 2, npc.velocity.Y);
-				if(!npc.HasValidTarget || Main.player[npc.target].Distance(npc.Center) >= 100f)
+				//Makes NPC move towards player
+				npc.velocity = new Vector2(npc.direction * 2.0f, npc.velocity.Y);
+				//Stops targeting player if they move too far away
+				if(!npc.HasValidTarget || Main.player[npc.target].Distance(npc.Center) >= 200f)
 				{
 					AI_State = State_Peaceful;
 					AI_Timer = 0;
+				}
+
+				if(npc.velocity.Y == 0f)
+				{
+					if(checkPoint.X > 0 && checkPoint.X < Main.maxTilesX)
+					{
+						Point currentPoint;
+						if(true) //Fix this
+						{
+							currentPoint = new Point(checkPoint.X, checkPoint.Y);
+						}
+						else
+						{
+							currentPoint = new Point(checkPoint.X, checkPoint.Y);
+						}
+
+						if(currentPoint.Y > 0 && currentPoint.Y < Main.maxTilesY)
+						{
+							Tile tile = Main.tile[currentPoint.X, currentPoint.Y];
+							if(tile != null && tile.active() && Main.tileSolid[tile.type])
+							{
+								npc.velocity.Y = -5; //Jump
+								break;
+							}
+						}
+					}
+
+					if(npc.HasPlayerTarget && npc.HasValidTarget)
+					{
+						Player player = Main.player[npc.target];
+						if(player != null && player.active && npc.Center.Y < player.Center.Y)
+						{
+							npc.stairFall = true; //Fall through platforms
+						}
+					}
 				}
 			}
 		}
 
 		public override void FindFrame(int frameHeight)
 		{
-			npc.frameCounter += 0.2F; //Animation speed
+			npc.frameCounter += 0.2f * AI_Timer; //Animation speed
 			npc.frameCounter %= Main.npcFrameCount[npc.type];
 			int frame = (int)npc.frameCounter;
 			npc.frame.Y = frame * frameHeight;
