@@ -69,16 +69,11 @@ namespace LovelyMod.NPCs
 			}
 			else if(AI_State == State_Pursuing)
 			{
-				Point bottomCenter = (npc.Bottom / 16f).ToPoint();
-				Point checkPoint = new Point(bottomCenter.X + (npc.direction > 0 ? 2 : -2), bottomCenter.Y);
-				AI_Timer++;
 				//Face toward nearest player periodically
 				if(AI_Timer % 30 == 0)
 				{
 					npc.TargetClosest(true); //Should face towards nearest player
 				}
-				//Makes NPC move towards player
-				npc.velocity = new Vector2(npc.direction * 2.0f, npc.velocity.Y);
 				//Stops targeting player if they move too far away
 				if(!npc.HasValidTarget || Main.player[npc.target].Distance(npc.Center) >= 200f)
 				{
@@ -88,27 +83,9 @@ namespace LovelyMod.NPCs
 
 				if(npc.velocity.Y == 0f)
 				{
-					if(checkPoint.X > 0 && checkPoint.X < Main.maxTilesX)
+					if(npc.velocity.X == 0f && AI_Timer != 0)
 					{
-						Point currentPoint;
-						if(true) //Fix this
-						{
-							currentPoint = new Point(checkPoint.X, checkPoint.Y);
-						}
-						else
-						{
-							currentPoint = new Point(checkPoint.X, checkPoint.Y);
-						}
-
-						if(currentPoint.Y > 0 && currentPoint.Y < Main.maxTilesY)
-						{
-							Tile tile = Main.tile[currentPoint.X, currentPoint.Y];
-							if(tile != null && tile.active() && Main.tileSolid[tile.type])
-							{
-								npc.velocity.Y = -5; //Jump
-								break;
-							}
-						}
+						npc.velocity.Y = -5f;
 					}
 
 					if(npc.HasPlayerTarget && npc.HasValidTarget)
@@ -120,6 +97,9 @@ namespace LovelyMod.NPCs
 						}
 					}
 				}
+				//Makes NPC move towards player
+				npc.velocity = new Vector2(npc.direction * 2.0f, npc.velocity.Y);
+				AI_Timer++;
 			}
 		}
 
