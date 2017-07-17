@@ -34,6 +34,8 @@ namespace LovelyMod.NPCs
 		const int State_Peaceful = 0;
 		const int State_Pursuing = 1;
 
+		const float Player_Detection_Range = 200f;
+
 		public float AI_State
 		{
 			get{return npc.ai[AI_State_Slot];}
@@ -52,7 +54,7 @@ namespace LovelyMod.NPCs
 			if(AI_State == State_Peaceful)
 			{
 				npc.TargetClosest(true); //Should face towards nearest player
-				if(npc.HasValidTarget && Main.player[npc.target].Distance(npc.Center) < 200f)
+				if(npc.HasValidTarget && Main.player[npc.target].Distance(npc.Center) < Player_Detection_Range)
 				{
 					AI_State = State_Pursuing;
 					AI_Timer = 0;
@@ -69,13 +71,12 @@ namespace LovelyMod.NPCs
 			}
 			else if(AI_State == State_Pursuing)
 			{
-				//Face toward nearest player periodically
-				if(AI_Timer % 30 == 0)
+				if(npc.HasValidTarget && Math.Abs(Main.player[npc.target].position.X - npc.position.X) > 50f)
 				{
-					npc.TargetClosest(true); //Should face towards nearest player
+					npc.TargetClosest(true);
 				}
 				//Stops targeting player if they move too far away
-				if(!npc.HasValidTarget || Main.player[npc.target].Distance(npc.Center) >= 200f)
+				if(!npc.HasValidTarget || Main.player[npc.target].Distance(npc.Center) >= Player_Detection_Range)
 				{
 					AI_State = State_Peaceful;
 					AI_Timer = 0;
