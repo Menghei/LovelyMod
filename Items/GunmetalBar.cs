@@ -11,6 +11,7 @@ namespace LovelyMod.Items
 		{
 			Tooltip.SetDefault("Make guns!");
 		}
+		//TODO - Test that Arms Dealer sells this item
 
 		public override void SetDefaults()
 		{
@@ -18,15 +19,6 @@ namespace LovelyMod.Items
 			item.height = 12;
 			item.maxStack = 99;
 			item.useTurn = true; //Not sure what this does...
-		}
-
-		public override void AddRecipes()
-		//TODO - Change recipe to actual gunmetal ores
-		{
-			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "RaethentiteOre");
-			recipe.SetResult(this);
-			recipe.AddRecipe();
 		}
 	}
 }
