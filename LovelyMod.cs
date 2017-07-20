@@ -46,6 +46,16 @@ namespace LovelyMod
 			recipe.AddIngredient(null, "RaethentiteOre");
 			recipe.SetResult(ItemID.MusketBall, 100);
 			recipe.AddRecipe();
+			
+			recipe = new ModRecipe(this);
+			recipe.AddIngredient(null, "RaethentiteOre");
+			recipe.SetResult(ItemID.Coal, 100);
+			recipe.AddRecipe();
+			
+			recipe = new ModRecipe(this);
+			recipe.AddIngredient(null, "RaethentiteOre");
+			recipe.SetResult(ItemID.IronBar, 100);
+			recipe.AddRecipe();
 		}
 	}
 }

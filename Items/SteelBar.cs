@@ -21,10 +21,11 @@ namespace LovelyMod.Items
 		}
 
 		public override void AddRecipes()
-		//TODO - Change recipe to use coal and iron
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "RaethentiteOre");
+			recipe.AddIngredient(ItemID.Coal);
+			recipe.AddIngredient(ItemID.IronBar, 2);
+			recipe.AddTile(TileID.Furnaces);
 			recipe.SetResult(this);
 			recipe.AddRecipe();
 		}
